@@ -15,5 +15,5 @@ jobs:
         with:
           upstream_repo: "https://github.com/brave/adblock-rust.git"
           upstream_branch: master
-          downstream_branch: main
+          downstream_branch: master
           token: ${{ secrets.GITHUB_TOKEN }}   
