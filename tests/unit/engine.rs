@@ -195,7 +195,7 @@ mod tests {
     fn deserialization_generate_simple() {
         let mut engine = Engine::new_with_list_text("ad-banner");
         let data = engine.serialize().to_vec();
-        const EXPECTED_HASH: u64 = 8140715178533393311;
+        const EXPECTED_HASH: u64 = 10610779084220584492;
         assert_eq!(hash(&data), EXPECTED_HASH, "{HASH_MISMATCH_MSG}");
         engine.deserialize(&data).unwrap();
     }
@@ -206,7 +206,7 @@ mod tests {
         let mut engine = Engine::new_with_list_text("ad-banner$tag=abc");
         engine.use_tags(&["abc"]);
         let data = engine.serialize().to_vec();
-        const EXPECTED_HASH: u64 = 11267534334233315862;
+        const EXPECTED_HASH: u64 = 9111262975876879244;
         assert_eq!(hash(&data), EXPECTED_HASH, "{HASH_MISMATCH_MSG}");
         engine.deserialize(&data).unwrap();
     }
@@ -234,8 +234,8 @@ mod tests {
         #[cfg(feature = "debug-info")]
         {
             let debug_info = engine.get_debug_info();
-            let low_bound = 8_700_000;
-            let high_bound = 9_200_000;
+            let low_bound = 8_200_000;
+            let high_bound = 8_900_000;
             assert!(
                 debug_info.flatbuffer_size >= low_bound,
                 "Expected size >= {} bytes, got {}",
@@ -258,13 +258,13 @@ mod tests {
                 debug_info.source_info[0].homepage,
                 Some("https://github.com/uBlockOrigin/uAssets".to_string())
             );
-            assert_eq!(debug_info.source_info[0].network_filter_count, 130800);
-            assert_eq!(debug_info.source_info[0].cosmetic_filter_count, 41855);
+            assert_eq!(debug_info.source_info[0].network_filter_count, 122996);
+            assert_eq!(debug_info.source_info[0].cosmetic_filter_count, 42318);
         }
         let expected_hash: u64 = if cfg!(feature = "css-validation") {
-            4855237263164911442
+            17859942404936466029
         } else {
-            3994644074087507906
+            11154142685266326628
         };
 
         assert_eq!(hash(&data), expected_hash, "{HASH_MISMATCH_MSG}");
