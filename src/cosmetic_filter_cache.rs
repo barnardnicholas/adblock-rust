@@ -27,7 +27,7 @@ use std::collections::{HashMap, HashSet};
 use serde::{Deserialize, Serialize};
 
 /// Contains cosmetic filter information intended to be used on a particular URL.
-#[derive(Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Default, PartialEq, Eq, Deserialize, Serialize)]
 pub struct UrlSpecificResources {
     /// `hide_selectors` is a set of any CSS selector on the page that should be hidden, i.e.
     /// styled as `{ display: none !important; }`.
@@ -35,7 +35,7 @@ pub struct UrlSpecificResources {
     /// Set of JSON-encoded procedural filters or filters with an action.
     pub procedural_actions: HashSet<String>,
     /// `exceptions` is a set of any class or id CSS selectors that should not have generic rules
-    /// applied. In practice, these should be passed to `class_id_stylesheet` and not used
+    /// applied. In practice, these should be passed to `hidden_class_id_selectors` and not used
     /// otherwise.
     pub exceptions: HashSet<String>,
     /// `injected_script` is the Javascript code for any scriptlets that should be injected into
@@ -49,13 +49,7 @@ pub struct UrlSpecificResources {
 
 impl UrlSpecificResources {
     pub fn empty() -> Self {
-        Self {
-            hide_selectors: HashSet::new(),
-            procedural_actions: HashSet::new(),
-            exceptions: HashSet::new(),
-            injected_script: String::new(),
-            generichide: false,
-        }
+        Self::default()
     }
 }
 
@@ -133,8 +127,8 @@ impl CosmeticFilterCache {
 
     #[cfg(test)]
     pub fn from_rules(rules: impl IntoIterator<Item = impl AsRef<str>>) -> Self {
-        use crate::engine::Engine;
         use crate::FilterSet;
+        use crate::engine::Engine;
 
         let mut filter_set = FilterSet::new(false);
         filter_set.add_filters(rules, Default::default());
