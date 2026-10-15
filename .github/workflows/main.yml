@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      workflows: write
     steps:
       - name: Sync upstream
         uses: dabreadman/sync-upstream-repo@v1.0.0.b
